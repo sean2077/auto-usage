@@ -42,7 +42,7 @@ class StateMachine:
 
 
 class CliUsageParser(StateMachine):
-    pat_usage = re.compile(r"^usage: ")
+    pat_usage = re.compile(r"^[uU]sage: ")
 
     def __init__(self):
         super().__init__()
@@ -68,7 +68,7 @@ class CliUsageParser(StateMachine):
 
 
 class CliCmdParser(StateMachine):
-    pat_metavar = re.compile(r"^\s*<command>$")
+    pat_metavar = re.compile(r"^[cC]ommands:\s*$")
     pat_cmd = re.compile(r"^\s*([a-z]+)\s*")
 
     def __init__(self):
@@ -101,12 +101,12 @@ def parse_prog_cli(cli):
     return cli_usage_parser.result, cli_cmd_parser.cmds
 
 
-def get_md_usage(prog) -> str:
-    usage, cmds = parse_prog_cli(["python", "-m", prog, "--help"])
+def get_md_usage(query_cmd) -> str:
+    usage, cmds = parse_prog_cli(query_cmd + ["--help"])
 
     s = [f"## Usage\n\n```\n{usage}\n```\n"]
     for cmd in cmds:
-        cli = ["python", "-m", prog, cmd, "--help"]
+        cli = query_cmd + [cmd, "--help"]
         cmd_usage, _ = parse_prog_cli(cli)
         s.append(f"### subcommand: {cmd}\n\n```\n{cmd_usage}\n```\n")
 
@@ -184,12 +184,22 @@ $ auto-usage
 
 
 def main():
+    root = os.getcwd()
+    sys.path.insert(1, root)
+    prog_slug = os.path.basename(root).lower().replace(" ", "_").replace("-", "_")
+
     parser = argparse.ArgumentParser(
         prog=prog_name,
         description="A python tool for auto-generating or auto-updating usage of python cli tools.",
     )
     parser.add_argument(
         "-V", "--version", action="version", version=f"%(prog)s {__version__}"
+    )
+    parser.add_argument(
+        "-c",
+        "--command",
+        help=f'main command, default is "python -m {prog_slug}"',
+        default=f"python -m {prog_slug}",
     )
 
     subparser = parser.add_subparsers(title="Commands", metavar="<command>")
@@ -202,10 +212,11 @@ def main():
         args.func(args)
         sys.exit(0)
 
-    root = os.getcwd()
-    prog_slug = os.path.basename(root).lower().replace(" ", "_").replace("-", "_")
     readme = os.path.join(root, "README.md")
-    usage = get_md_usage(prog_slug)
+    try:
+        usage = get_md_usage(args.command.split(" "))
+    except Exception as e:
+        raise RuntimeError("please use correct command.")
 
     print('"README.md" will be updated')
 

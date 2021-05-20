@@ -28,26 +28,28 @@ pip install auto-usage
 
 ## How to use
 
-Auto-usage works for python cli tools based on [argparse](https://docs.python.org/3/library/argparse.html) or other scripts that support '--help' option for showing help message like the following [usage](#Usage).
+Auto-usage works for python cli tools based on [argparse](https://docs.python.org/3/library/argparse.html), [click](https://github.com/pallets/click) or other scripts that support '--help' option for showing help message like the following [usage](#Usage).
 
-For auto-usage using pattern `usage: ` to search where the usage beginning, and using the `\ <command>` to search where the subcommands beginning, you must make sure your tool's usage following the pattern.
+For auto-usage using regex pattern `^[uU]sage: ` to search where the usage beginning, and using `^[cC]ommands:\s*$` to search where the subcommands beginning, you must make sure your tool's usage following the pattern.
 
 As for project structure, you can refer to this project, or just created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [`zhangxianbing/cookiecutter-pypackage`](https://github.com/zhangxianbing/cookiecutter-pypackage) project template.
 
 ## Usage
 
 ```
-usage: auto-usage [-h] [-V] <command> ...
+usage: auto-usage [-h] [-V] [-c COMMAND] <command> ...
 
 A python tool for auto-generating or auto-updating usage of python cli tools.
 
 optional arguments:
-  -h, --help     show this help message and exit
-  -V, --version  show program's version number and exit
+  -h, --help            show this help message and exit
+  -V, --version         show program's version number and exit
+  -c COMMAND, --command COMMAND
+                        main command, default is "python -m auto_usage"
 
 Commands:
   <command>
-    quickstart   quickstart for auto-usage.
+    quickstart          quickstart for auto-usage.
 
 ```
 
