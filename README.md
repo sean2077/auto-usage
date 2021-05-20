@@ -20,8 +20,7 @@ A python tool for auto-generating or auto-updating usage of python cli tools.
 
 ```bash
  # install
- git clone https://github.com/zhangxianbing/auto-usage
- cd auto-usage && pip install .
+pip install auto-usage
 
 # usage
  cd /path/to/project
@@ -39,30 +38,19 @@ As for project structure, you can refer to this project, or just created with [C
 ## Usage
 
 ```
-usage: auto-usage [-h] <command> ...
+usage: auto-usage [-h] [-V] <command> ...
 
 A python tool for auto-generating or auto-updating usage of python cli tools.
 
 optional arguments:
-  -h, --help  show this help message and exit
+  -h, --help     show this help message and exit
+  -V, --version  show program's version number and exit
 
 Commands:
   <command>
-    quickstart
-              quickstart for auto-usage.
+    quickstart   quickstart for auto-usage.
 
 ```
-
-### subcommand: quickstart
-
-```
-usage: auto-usage quickstart [-h]
-
-optional arguments:
-  -h, --help  show this help message and exit
-
-```
-
 ### subcommand: quickstart
 
 ```

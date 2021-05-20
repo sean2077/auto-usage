@@ -6,7 +6,7 @@ import subprocess
 import sys
 from enum import Enum
 
-from . import prog_name
+from . import prog_name, __version__
 
 
 class State(Enum):
@@ -188,6 +188,10 @@ def main():
         prog=prog_name,
         description="A python tool for auto-generating or auto-updating usage of python cli tools.",
     )
+    parser.add_argument(
+        "-V", "--version", action="version", version=f"%(prog)s {__version__}"
+    )
+
     subparser = parser.add_subparsers(title="Commands", metavar="<command>")
     quickstart_cmd = subparser.add_parser(
         "quickstart", help="quickstart for auto-usage."
