@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/zhangxianbing/auto-usage/compare/v1.0.0...v1.0.1) (2021-05-20)
+
+
+### Features
+
+* bump version 1.0.1 ([dd5c657](https://github.com/zhangxianbing/auto-usage/commit/dd5c6578c3ce3ce993be130755b615dc26de052d))
+* support python cli project based on click ([5180bb2](https://github.com/zhangxianbing/auto-usage/commit/5180bb2182f04a3d31606700aaf6ffe0e3a2f671))
+
 ## 1.0.0 (2021-05-20)
 
 
