@@ -6,7 +6,6 @@
   - [How to use](#how-to-use)
   - [Usage](#usage)
     - [subcommand: quickstart](#subcommand-quickstart)
-    - [subcommand: quickstart](#subcommand-quickstart-1)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -51,6 +50,7 @@ Commands:
     quickstart   quickstart for auto-usage.
 
 ```
+
 ### subcommand: quickstart
 
 ```
