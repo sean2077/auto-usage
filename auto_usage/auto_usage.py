@@ -3,9 +3,10 @@ import os
 import re
 import shutil
 import subprocess
+import sys
 from enum import Enum
 
-from . import __name__ as name
+from . import prog_name
 
 
 class State(Enum):
@@ -41,7 +42,7 @@ class StateMachine:
 
 
 class CliUsageParser(StateMachine):
-    pat_usage = re.compile(r"usage: ")
+    pat_usage = re.compile(r"^usage: ")
 
     def __init__(self):
         super().__init__()
@@ -101,11 +102,11 @@ def parse_prog_cli(cli):
 
 
 def get_md_usage(prog) -> str:
-    usage, cmds = parse_prog_cli(["python", "-m", prog, "-h"])
+    usage, cmds = parse_prog_cli(["python", "-m", prog, "--help"])
 
     s = [f"## Usage\n\n```\n{usage}\n```\n"]
     for cmd in cmds:
-        cli = ["python", "-m", prog, cmd, "-h"]
+        cli = ["python", "-m", prog, cmd, "--help"]
         cmd_usage, _ = parse_prog_cli(cli)
         s.append(f"### subcommand: {cmd}\n\n```\n{cmd_usage}\n```\n")
 
@@ -168,20 +169,46 @@ class ReadmeEditor(StateMachine):
         self.outfile.write(self.new_usage)
 
 
+def quickstart(args):
+    detail = """Please follow the following steps and input according to prompt...
+
+$ pip install -U cookiecutter
+
+$ cookiecutter git@github.com:zhangxianbing/cookiecutter-pypackage.git
+
+$ cd ${your_project}
+
+$ auto-usage
+"""
+    print(detail)
+
+
 def main():
     parser = argparse.ArgumentParser(
-        prog=name,
-        description="A python tool for agenerating or auto-updating usage of python cli tools.",
+        prog=prog_name,
+        description="A python tool for auto-generating or auto-updating usage of python cli tools.",
     )
+    subparser = parser.add_subparsers(title="Commands", metavar="<command>")
+    quickstart_cmd = subparser.add_parser(
+        "quickstart", help="quickstart for auto-usage."
+    )
+    quickstart_cmd.set_defaults(func=quickstart)
     args = parser.parse_args()
+    if hasattr(args, "func"):
+        args.func(args)
+        sys.exit(0)
 
     root = os.getcwd()
     prog_slug = os.path.basename(root).lower().replace(" ", "_").replace("-", "_")
     readme = os.path.join(root, "README.md")
     usage = get_md_usage(prog_slug)
 
+    print('"README.md" will be updated')
+
     with ReadmeEditor(readme, usage) as editor:
         editor.edit()
+
+    print("Everything is OK.")
 
 
 if __name__ == "__main__":

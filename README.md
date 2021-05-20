@@ -1,8 +1,20 @@
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+- [Auto Usage](#auto-usage)
+  - [Installation](#installation)
+  - [How to use](#how-to-use)
+  - [Usage](#usage)
+    - [subcommand: quickstart](#subcommand-quickstart)
+    - [subcommand: quickstart](#subcommand-quickstart-1)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 # Auto Usage
 
-A python tool for agenerating or auto-updating usage of python cli tools.
+A python tool for auto-generating or auto-updating usage of python cli tools.
 
-> Note: This project was created with [Cookiecutter](https://gitlab.sz.sensetime.com/audreyr/cookiecutter) and the [`zhangxianbing/cookiecutter-pypackage`](https://github.com/zhangxianbing/cookiecutter-pypackage) project template.
+> Note: This project was created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [`zhangxianbing/cookiecutter-pypackage`](https://github.com/zhangxianbing/cookiecutter-pypackage) project template.
 
 ## Installation
 
@@ -13,15 +25,48 @@ A python tool for agenerating or auto-updating usage of python cli tools.
 
 # usage
  cd /path/to/project
- auto_usage
+ auto-usage
 ```
+
+## How to use
+
+Auto-usage works for python cli tools based on [argparse](https://docs.python.org/3/library/argparse.html) or other scripts that support '--help' option for showing help message like the following [usage](#Usage).
+
+For auto-usage using pattern `usage: ` to search where the usage beginning, and using the `\ <command>` to search where the subcommands beginning, you must make sure your tool's usage following the pattern.
+
+As for project structure, you can refer to this project, or just created with [Cookiecutter](https://github.com/cookiecutter/cookiecutter) and the [`zhangxianbing/cookiecutter-pypackage`](https://github.com/zhangxianbing/cookiecutter-pypackage) project template.
 
 ## Usage
 
 ```
-usage: auto_usage [-h]
+usage: auto-usage [-h] <command> ...
 
-A python tool for agenerating or auto-updating usage of python cli tools.
+A python tool for auto-generating or auto-updating usage of python cli tools.
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+Commands:
+  <command>
+    quickstart
+              quickstart for auto-usage.
+
+```
+
+### subcommand: quickstart
+
+```
+usage: auto-usage quickstart [-h]
+
+optional arguments:
+  -h, --help  show this help message and exit
+
+```
+
+### subcommand: quickstart
+
+```
+usage: auto-usage quickstart [-h]
 
 optional arguments:
   -h, --help  show this help message and exit

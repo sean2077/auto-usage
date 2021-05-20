@@ -1,5 +1,7 @@
-from auto_usage import __author__, __name__, __version__
 from setuptools import find_packages, setup
+
+from auto_usage import __author__, __name__, __version__, prog_name
+
 
 def read_requirements():
     reqs = []
@@ -25,7 +27,7 @@ setup(
     python_requires=">=3.6",
     entry_points={
         "console_scripts": [
-            f"{__name__} = {__name__}.{__name__}:main",
+            f"{prog_name.replace('_', '-')} = {__name__}.{__name__}:main",
         ],
     },
 )
